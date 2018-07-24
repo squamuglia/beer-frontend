@@ -36,6 +36,8 @@
     border-left-style:solid;
     border-left-width: 1px;
   }
+
+  .border-dark { border-color: #222 }
   
   .border-none{ border:0 }
   
@@ -50,10 +52,14 @@
 /* Breakpoints */
 @media (max-width: 40em){
     .xs-hide{ display:none !important }
+    
+    .mobile-button { position: fixed;  }
   }
   
   @media (min-width: 40em) and (max-width: 52em){
     .sm-hide{ display:none !important }
+
+    .mobile-button { position: fixed;  }
   }
   
   @media (min-width: 52em) and (max-width: 64em){
@@ -69,10 +75,17 @@
 
 body, .bg { background: #222 }
 
+.bg-white { background: #fff }
+
+.bg-90 { background: #222222e3 }
+
 .logo { max-width: 10em }
 
 .white { color: #fff }
+.dark { color: #222 }
 
 .w30 { width: 30px }
 
 .bxs { box-shadow: 0px 0px 5px #00000082; }
+
+.pointer { cursor: pointer }
