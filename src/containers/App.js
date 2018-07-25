@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Building from './Building';
+import Building from '../components/Building';
 
 class App extends Component {
   constructor(props) {
@@ -10,7 +10,8 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch('https://calm-depths-56846.herokuapp.com/api/v1/buildings')
+    // fetch('https://calm-depths-56846.herokuapp.com/api/v1/buildings')
+    fetch('http://localhost:5000/api/v1/buildings')
       .then(r => r.json())
       .then(r => this.saveBuildings(r));
   }
