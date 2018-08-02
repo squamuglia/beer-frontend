@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Floor from './Floor';
-import AddBeerForm from './AddBeerForm';
-import UpdateBeerForm from './UpdateBeerForm';
+import BeerDisplay from '../containers/BeerDisplay';
 import UUID from 'uuid';
 
 class Building extends Component {
@@ -37,7 +36,7 @@ class Building extends Component {
       kegSelect = allKegs.find(keg => keg.id === this.state.beerSelect);
 
       return (
-        <UpdateBeerForm
+        <BeerDisplay
           toggleForm={this.toggleForm}
           keg={kegSelect}
           kegs={allKegs}

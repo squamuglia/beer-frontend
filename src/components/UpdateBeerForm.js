@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import firebase from '../firebase.js';
 
 class UpdateBeerForm extends Component {
   constructor(props) {
@@ -9,38 +10,36 @@ class UpdateBeerForm extends Component {
     };
   }
 
+  changeHandler = event => {
+    // this.setState(Object.assign({}, this.state, event), () =>
+    //   console.log('changeHandler', this.state)
+    // );
+  };
+
   render() {
     console.log('form props', this.props);
 
     return (
-      <div className="fix fill bg-90 f aic jcc z1">
-        <div className="fa border mw-1 p1 bg b z10">
-          <div
-            className="x ar"
-            id="x"
-            onClick={event => this.props.toggleForm(event)}
-          >
-            X
+      <form>
+        <label>Name</label>
+        <select onChange={this.changeHandler}>
+          <option value="null">No Beer</option>
+          {this.props.kegs.map(keg => (
+            <option value={keg.id}>{keg.name}</option>
+          ))}
+        </select>
+        <br />
+        <button
+          onClick={event => this.props.clickHandle(event)}
+          className="px1 my1 border ac"
+          id="new-beer"
+        >
+          <div className="s4" id="update-beer">
+            Update Beer
           </div>
-          <form>
-            <label>Name</label>
-            <select>
-              <option value="null">No Beer</option>
-              {this.props.kegs.map(keg => (
-                <option value={keg.id}>{keg.name}</option>
-              ))}
-            </select>
-            <br />
-            <button
-              onClick={event => console.log(event)}
-              className="px1 mt1 border ac"
-              id="new-beer"
-            >
-              <h3 id="update-beer">Update Beer</h3>
-            </button>
-          </form>
-        </div>
-      </div>
+        </button>
+        <hr className="mb1" />
+      </form>
     );
   }
 }
