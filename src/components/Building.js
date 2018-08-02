@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Floor from './Floor';
-import AddBeerForm from './AddBeerForm';
 import UpdateBeerForm from './UpdateBeerForm';
 import UUID from 'uuid';
 
@@ -24,23 +23,23 @@ class Building extends Component {
     if (this.state.formOpen === true) {
       let allKegs = [];
       let kegSelect = '';
-      this.props.buildings.map(building => {
-        building.floors.map(floor => {
-          floor.kegs.forEach(keg => {
-            if (this.objectIdComparator(allKegs, keg)) {
-              allKegs.push(keg);
-            }
-          });
-        });
-      });
+      // this.props.buildings.map(building => {
+      //   building.floors.map(floor => {
+      //     floor.kegs.forEach(keg => {
+      //       if (this.objectIdComparator(allKegs, keg)) {
+      //         allKegs.push(keg);
+      //       }
+      //     });
+      //   });
+      // });
       console.log('all', allKegs);
-      kegSelect = allKegs.find(keg => keg.id === this.state.beerSelect);
+      kegSelect = this.props.kegs.find(keg => keg.id === this.state.beerSelect);
 
       return (
         <UpdateBeerForm
           toggleForm={this.toggleForm}
           keg={kegSelect}
-          kegs={allKegs}
+          kegs={this.props.kegs}
           floor={this.state.floorSelect}
           building={this.state.buildingSelect}
         />

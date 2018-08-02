@@ -5,25 +5,37 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      buildings: []
+      buildings: [],
+      floors: [],
+      kegs: []
     };
+
+    this.url = 'http://localhost:3000';
+    // this.url = 'https://calm-depths-56846.herokuapp.com'
   }
 
   componentDidMount() {
-    // fetch('https://calm-depths-56846.herokuapp.com/api/v1/buildings')
-    fetch('http://localhost:5000/api/v1/buildings')
+    fetch(this.url + '/api/v1/buildings')
       .then(r => r.json())
-      .then(r => this.saveBuildings(r));
+      .then(r => this.saveItems(r, 'buildings', this.state.buildings));
+
+    fetch(this.url + '/api/v1/floors')
+      .then(r => r.json())
+      .then(r => this.saveItems(r, 'floors', this.state.floors));
+
+    fetch(this.url + '/api/v1/kegs')
+      .then(r => r.json())
+      .then(r => this.saveItems(r, 'kegs', this.state.kegs));
   }
 
-  saveBuildings = r => {
-    const buildingList = [...this.state.buildings];
-    r.forEach(building => buildingList.push(building));
+  saveItems = (r, item, state) => {
+    const itemList = [...state];
+    r.forEach(item => itemList.push(item));
     this.setState(
       {
-        buildings: buildingList
+        [item]: itemList
       },
-      () => console.log('saveBuildings', this.state)
+      () => console.log('items', this.state)
     );
   };
 
@@ -51,7 +63,10 @@ class App extends Component {
             <hr />
 
             <div id="lists" className="f fw mb1">
-              <Building buildings={this.state.buildings} />
+              <Building
+                buildings={this.state.buildings}
+                kegs={this.state.kegs}
+              />
             </div>
           </div>
           <div className="x rel px1">
