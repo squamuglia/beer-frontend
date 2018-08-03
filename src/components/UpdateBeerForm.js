@@ -5,10 +5,20 @@ class UpdateBeerForm extends Component {
     super(props);
 
     this.state = {
-      ...this.props.keg
+      id: this.props.keg.id,
+      name: this.props.keg.name,
+      selectId: this.props.keg.id
     };
   }
 
+  selectHandler = e => {
+    this.setState(
+      {
+        selectId: e.target.value
+      },
+      () => console.log('updatebeerstate', this.state)
+    );
+  };
   render() {
     console.log('form props', this.props);
 
@@ -24,15 +34,21 @@ class UpdateBeerForm extends Component {
           </div>
           <form>
             <label>Name</label>
-            <select>
-              <option value="null">No Beer</option>
+            <select onChange={this.selectHandler}>
               {this.props.kegs.map(keg => (
                 <option value={keg.id}>{keg.name}</option>
               ))}
             </select>
             <br />
             <button
-              onClick={event => console.log(event)}
+              onClick={event =>
+                this.props.changeKeg(
+                  event,
+                  this.props.keg,
+                  this.state.selectId,
+                  this.props.floor
+                )
+              }
               className="px1 mt1 border ac"
               id="new-beer"
             >

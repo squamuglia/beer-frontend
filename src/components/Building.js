@@ -42,12 +42,13 @@ class Building extends Component {
           kegs={this.props.kegs}
           floor={this.state.floorSelect}
           building={this.state.buildingSelect}
+          changeKeg={this.props.changeKeg}
         />
       );
     }
   };
 
-  loadBuildings = () => {
+  loadFloors = () => {
     return this.props.buildings.map(building => {
       return (
         <div className="fa" data-buildingid={building.id} id={UUID()}>
@@ -80,7 +81,7 @@ class Building extends Component {
     return (
       <React.Fragment>
         {this.formDisplay()}
-        {this.loadBuildings()}
+        {this.loadFloors()}
       </React.Fragment>
     );
   }

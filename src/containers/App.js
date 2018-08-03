@@ -7,7 +7,8 @@ class App extends Component {
     this.state = {
       buildings: [],
       floors: [],
-      kegs: []
+      kegs: [],
+      beerLocations: []
     };
 
     this.url = 'http://localhost:3000';
@@ -26,6 +27,10 @@ class App extends Component {
     fetch(this.url + '/api/v1/kegs')
       .then(r => r.json())
       .then(r => this.saveItems(r, 'kegs', this.state.kegs));
+
+    fetch(this.url + '/api/v1/beerlocations')
+      .then(r => r.json())
+      .then(r => this.saveItems(r, 'beerLocations', this.state.beerLocations));
   }
 
   saveItems = (r, item, state) => {
@@ -37,6 +42,30 @@ class App extends Component {
       },
       () => console.log('items', this.state)
     );
+  };
+
+  changeKeg = (e, keg, kegSelect, floor) => {
+    e.preventDefault();
+    const floorNum = parseInt(floor);
+    const location_id = this.state.beerLocations.find(beerLocation => {
+      return (
+        beerLocation.floor.number == floor && beerLocation.keg.id == keg.id
+      );
+    });
+    debugger;
+    fetch(this.url + '/api/v1/beerlocations/' + location_id.id, {
+      method: 'POST',
+      body: JSON.stringify({
+        keg_id: kegSelect,
+        floor_id: floorNum
+      }),
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(r => r.json())
+      .then(r => console.log('response', r));
   };
 
   render() {
@@ -66,6 +95,7 @@ class App extends Component {
               <Building
                 buildings={this.state.buildings}
                 kegs={this.state.kegs}
+                changeKeg={this.changeKeg}
               />
             </div>
           </div>
