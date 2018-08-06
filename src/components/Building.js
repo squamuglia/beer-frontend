@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Floor from './Floor';
 import UpdateBeerForm from './UpdateBeerForm';
 import UUID from 'uuid';
@@ -54,7 +55,7 @@ class Building extends Component {
         <div className="fa" data-buildingid={building.id} id={UUID()}>
           <h3 className="white my05">{building.street}</h3>
           <ul id={UUID()}>
-            <Floor floors={building.floors} toggleForm={this.toggleForm} />
+            <Floor building={building} toggleForm={this.toggleForm} />
           </ul>
         </div>
       );
@@ -78,6 +79,8 @@ class Building extends Component {
   };
 
   render() {
+    console.log('building props', this.props);
+
     return (
       <React.Fragment>
         {this.formDisplay()}
@@ -87,4 +90,33 @@ class Building extends Component {
   }
 }
 
-export default Building;
+function msp(state) {
+  return {
+    buildings: state.buildings,
+    floors: state.floors,
+    kegs: state.kegs,
+    beerLocations: state.beerLocations
+  };
+}
+
+function mdp(dispatch) {
+  return {
+    addBuildings: buildingsData => {
+      dispatch({ type: 'ADD_BUILDINGS', payload: buildingsData });
+    },
+    addFloors: floorsData => {
+      dispatch({ type: 'ADD_FLOORS', payload: floorsData });
+    },
+    addKegs: kegsData => {
+      dispatch({ type: 'ADD_KEGS', payload: kegsData });
+    },
+    addBeerLocations: beerLocationsData => {
+      dispatch({ type: 'ADD_BEERLOCATIONS', payload: beerLocationsData });
+    }
+  };
+}
+
+export default connect(
+  msp,
+  mdp
+)(Building);

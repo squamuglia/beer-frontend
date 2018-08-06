@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class Floor extends Component {
   constructor(props) {
@@ -6,7 +7,10 @@ class Floor extends Component {
   }
 
   loadFloors = () => {
-    return this.props.floors.map(floor => {
+    const floors = this.props.floors.filter(
+      floor => this.props.building.id === floor.building_id
+    );
+    return floors.map(floor => {
       return floor.kegs.map(keg => {
         return (
           <li className="white" data-floorid={floor.number}>
@@ -32,9 +36,38 @@ class Floor extends Component {
   };
 
   render() {
-    console.log('render floors', this.props.floors);
+    console.log('render', this.props);
     return <React.Fragment>{this.loadFloors()}</React.Fragment>;
   }
 }
 
-export default Floor;
+function msp(state) {
+  return {
+    buildings: state.buildings,
+    floors: state.floors,
+    kegs: state.kegs,
+    beerLocations: state.beerLocations
+  };
+}
+
+function mdp(dispatch) {
+  return {
+    addBuildings: buildingsData => {
+      dispatch({ type: 'ADD_BUILDINGS', payload: buildingsData });
+    },
+    addFloors: floorsData => {
+      dispatch({ type: 'ADD_FLOORS', payload: floorsData });
+    },
+    addKegs: kegsData => {
+      dispatch({ type: 'ADD_KEGS', payload: kegsData });
+    },
+    addBeerLocations: beerLocationsData => {
+      dispatch({ type: 'ADD_BEERLOCATIONS', payload: beerLocationsData });
+    }
+  };
+}
+
+export default connect(
+  msp,
+  mdp
+)(Floor);

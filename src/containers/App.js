@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Building from '../components/Building';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      buildings: [],
-      floors: [],
-      kegs: [],
-      beerLocations: []
-    };
 
     this.url = 'http://localhost:3000';
     // this.url = 'https://calm-depths-56846.herokuapp.com'
@@ -18,58 +13,57 @@ class App extends Component {
   componentDidMount() {
     fetch(this.url + '/api/v1/buildings')
       .then(r => r.json())
-      .then(r => this.saveItems(r, 'buildings', this.state.buildings));
-
+      .then(buildings => this.props.addBuildings(buildings));
     fetch(this.url + '/api/v1/floors')
       .then(r => r.json())
-      .then(r => this.saveItems(r, 'floors', this.state.floors));
-
+      .then(floors => this.props.addFloors(floors));
     fetch(this.url + '/api/v1/kegs')
       .then(r => r.json())
-      .then(r => this.saveItems(r, 'kegs', this.state.kegs));
-
+      .then(kegs => this.props.addKegs(kegs));
     fetch(this.url + '/api/v1/beerlocations')
       .then(r => r.json())
-      .then(r => this.saveItems(r, 'beerLocations', this.state.beerLocations));
+      .then(beerLocations => this.props.addBeerLocations(beerLocations));
   }
 
-  saveItems = (r, item, state) => {
-    const itemList = [...state];
-    r.forEach(item => itemList.push(item));
-    this.setState(
-      {
-        [item]: itemList
-      },
-      () => console.log('items', this.state)
-    );
-  };
+  // saveItems = (r, item, state) => {
+  //   const itemList = [...state];
+  //   r.forEach(item => itemList.push(item));
+  //   this.setState(
+  //     {
+  //       [item]: itemList
+  //     },
+  //     () => console.log('items', this.state)
+  //   );
+  // };
 
-  changeKeg = (e, keg, kegSelect, floor) => {
-    e.preventDefault();
-    const floorNum = parseInt(floor);
-    const location_id = this.state.beerLocations.find(beerLocation => {
-      return (
-        beerLocation.floor.number == floor && beerLocation.keg.id == keg.id
-      );
-    });
-    debugger;
-    fetch(this.url + '/api/v1/beerlocations/' + location_id.id, {
-      method: 'POST',
-      body: JSON.stringify({
-        keg_id: kegSelect,
-        floor_id: floorNum
-      }),
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(r => r.json())
-      .then(r => console.log('response', r));
-  };
+  // changeKeg = (e, keg, kegSelect, floor) => {
+  //   e.preventDefault();
+  //   const floorNum = parseInt(floor);
+  //   const location_id = this.state.beerLocations.find(beerLocation => {
+  //     return (
+  //       beerLocation.floor.number == floor && beerLocation.keg.id == keg.id
+  //     );
+  //   });
+
+  //   fetch(this.url + '/api/v1/beerlocations/' + location_id.id, {
+  //     method: 'POST',
+  //     body: JSON.stringify({
+  //       keg_id: kegSelect,
+  //       floor_id: floorNum
+  //     }),
+  //     headers: {
+  //       Accept: 'application/json',
+  //       'Content-Type': 'application/json'
+  //     }
+  //   })
+  //     .then(r => r.json())
+  //     .then(r => console.log('response', r));
+  // };
 
   render() {
-    if (!this.state.buildings) {
+    console.log('the props', this.props);
+
+    if (!this.props.buildings) {
       return (
         <div className="fill fix f jcc aic">
           <p className="fa ac">Loading...</p>
@@ -92,11 +86,7 @@ class App extends Component {
             <hr />
 
             <div id="lists" className="f fw mb1">
-              <Building
-                buildings={this.state.buildings}
-                kegs={this.state.kegs}
-                changeKeg={this.changeKeg}
-              />
+              <Building changeKeg={this.changeKeg} />
             </div>
           </div>
           <div className="x rel px1">
@@ -117,4 +107,33 @@ class App extends Component {
   }
 }
 
-export default App;
+function msp(state) {
+  return {
+    buildings: state.buildings,
+    floors: state.floors,
+    kegs: state.kegs,
+    beerLocations: state.beerLocations
+  };
+}
+
+function mdp(dispatch) {
+  return {
+    addBuildings: buildingsData => {
+      dispatch({ type: 'ADD_BUILDINGS', payload: buildingsData });
+    },
+    addFloors: floorsData => {
+      dispatch({ type: 'ADD_FLOORS', payload: floorsData });
+    },
+    addKegs: kegsData => {
+      dispatch({ type: 'ADD_KEGS', payload: kegsData });
+    },
+    addBeerLocations: beerLocationsData => {
+      dispatch({ type: 'ADD_BEERLOCATIONS', payload: beerLocationsData });
+    }
+  };
+}
+
+export default connect(
+  msp,
+  mdp
+)(App);
