@@ -14,14 +14,13 @@ class UpdateBeerForm extends Component {
   selectHandler = e => {
     this.setState(
       {
-        selectId: e.target.value
+        selectId: parseInt(e.target.value)
       },
       () => console.log('updatebeerstate', this.state)
     );
   };
-  render() {
-    console.log('form props', this.props);
 
+  render() {
     return (
       <div className="fix fill bg-90 f aic jcc z1">
         <div className="fa border mw-1 p1 bg b z10">
@@ -42,12 +41,7 @@ class UpdateBeerForm extends Component {
             <br />
             <button
               onClick={event =>
-                this.props.changeKeg(
-                  event,
-                  this.props.keg,
-                  this.state.selectId,
-                  this.props.floor
-                )
+                this.props.changeKeg(event, this.state.selectId)
               }
               className="px1 mt1 border ac"
               id="new-beer"

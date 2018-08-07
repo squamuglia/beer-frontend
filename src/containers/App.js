@@ -5,60 +5,22 @@ import Building from '../components/Building';
 class App extends Component {
   constructor(props) {
     super(props);
-
-    this.url = 'http://localhost:3000';
-    // this.url = 'https://calm-depths-56846.herokuapp.com'
   }
 
   componentDidMount() {
-    fetch(this.url + '/api/v1/buildings')
+    fetch(this.props.url + '/api/v1/buildings')
       .then(r => r.json())
       .then(buildings => this.props.addBuildings(buildings));
-    fetch(this.url + '/api/v1/floors')
+    fetch(this.props.url + '/api/v1/floors')
       .then(r => r.json())
       .then(floors => this.props.addFloors(floors));
-    fetch(this.url + '/api/v1/kegs')
+    fetch(this.props.url + '/api/v1/kegs')
       .then(r => r.json())
       .then(kegs => this.props.addKegs(kegs));
-    fetch(this.url + '/api/v1/beerlocations')
+    fetch(this.props.url + '/api/v1/beerlocations')
       .then(r => r.json())
       .then(beerLocations => this.props.addBeerLocations(beerLocations));
   }
-
-  // saveItems = (r, item, state) => {
-  //   const itemList = [...state];
-  //   r.forEach(item => itemList.push(item));
-  //   this.setState(
-  //     {
-  //       [item]: itemList
-  //     },
-  //     () => console.log('items', this.state)
-  //   );
-  // };
-
-  // changeKeg = (e, keg, kegSelect, floor) => {
-  //   e.preventDefault();
-  //   const floorNum = parseInt(floor);
-  //   const location_id = this.state.beerLocations.find(beerLocation => {
-  //     return (
-  //       beerLocation.floor.number == floor && beerLocation.keg.id == keg.id
-  //     );
-  //   });
-
-  //   fetch(this.url + '/api/v1/beerlocations/' + location_id.id, {
-  //     method: 'POST',
-  //     body: JSON.stringify({
-  //       keg_id: kegSelect,
-  //       floor_id: floorNum
-  //     }),
-  //     headers: {
-  //       Accept: 'application/json',
-  //       'Content-Type': 'application/json'
-  //     }
-  //   })
-  //     .then(r => r.json())
-  //     .then(r => console.log('response', r));
-  // };
 
   render() {
     console.log('the props', this.props);
@@ -112,7 +74,8 @@ function msp(state) {
     buildings: state.buildings,
     floors: state.floors,
     kegs: state.kegs,
-    beerLocations: state.beerLocations
+    beerLocations: state.beerLocations,
+    url: state.url
   };
 }
 

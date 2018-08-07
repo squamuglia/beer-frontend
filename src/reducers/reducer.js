@@ -2,7 +2,9 @@ const defaultState = {
   buildings: [],
   floors: [],
   kegs: [],
-  beerLocations: []
+  beerLocations: [],
+  url: 'http://localhost:3000'
+  //'https://calm-depths-56846.herokuapp.com'
 };
 
 export default function reducer(state = defaultState, action) {
@@ -26,20 +28,27 @@ export default function reducer(state = defaultState, action) {
       };
 
     case 'ADD_BEERLOCATIONS':
+      //sorts by floor order
+      const sortedLocations = action.payload.sort(function(a, b) {
+        return a.floor.id - b.floor.id;
+      });
       return {
         ...state,
-        beerLocations: [...state.kegs, ...action.payload]
+        beerLocations: [...state.beerLocations, ...sortedLocations]
       };
 
-    // case 'CHANGE_KEG':
-    //   const removalIndex = state.kegs.findIndex(keg => keg.id === action.id);
-    //   return {
-    //     ...state,
-    //     kegs: [
-    //       ...state.beers.slice(0, removalIndex),
-    //       ...state.beers.slice(removalIndex + 1)
-    //     ]
-    //   };
+    case 'CHANGE_BEERLOCATION':
+      const removalIndex = state.beerLocations.findIndex(
+        beerLocation => beerLocation.id === action.payload.id
+      );
+      return {
+        ...state,
+        beerLocations: [
+          ...state.beerLocations.slice(0, removalIndex),
+          action.payload,
+          ...state.beerLocations.slice(removalIndex + 1)
+        ]
+      };
 
     default:
       return state;

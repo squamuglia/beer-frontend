@@ -11,8 +11,8 @@ class Building extends Component {
     this.state = {
       formOpen: false,
       beerSelect: null,
-      buildingSelect: null,
       floorSelect: null,
+      beerLocation: null,
       keg: null
     };
   }
@@ -20,21 +20,31 @@ class Building extends Component {
   objectIdComparator = (array, object) =>
     !array.map(item => item.id === object.id).includes(true);
 
+  changeKeg = (e, kegSelect) => {
+    e.preventDefault();
+    fetch(this.props.url + '/api/v1/beerlocations/' + this.state.beerLocation, {
+      method: 'POST',
+      body: JSON.stringify({
+        keg_id: kegSelect,
+        floor_id: this.state.floorSelect
+      }),
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(r => r.json())
+      .then(beerLocation => this.props.changeBeerLocation(beerLocation));
+
+    this.setState({
+      ...this.state,
+      formOpen: !this.state.formOpen
+    });
+  };
+
   formDisplay = () => {
     if (this.state.formOpen === true) {
-      let allKegs = [];
       let kegSelect = '';
-      // this.props.buildings.map(building => {
-      //   building.floors.map(floor => {
-      //     floor.kegs.forEach(keg => {
-      //       if (this.objectIdComparator(allKegs, keg)) {
-      //         allKegs.push(keg);
-      //       }
-      //     });
-      //   });
-      // });
-      console.log('all', allKegs);
-      kegSelect = this.props.kegs.find(keg => keg.id === this.state.beerSelect);
 
       return (
         <UpdateBeerForm
@@ -42,8 +52,7 @@ class Building extends Component {
           keg={kegSelect}
           kegs={this.props.kegs}
           floor={this.state.floorSelect}
-          building={this.state.buildingSelect}
-          changeKeg={this.props.changeKeg}
+          changeKeg={this.changeKeg}
         />
       );
     }
@@ -62,17 +71,14 @@ class Building extends Component {
     });
   };
 
-  toggleForm = (event, id) => {
+  toggleForm = (event, id, keg, floor) => {
     this.setState(
       Object.assign({}, this.state, {
         formOpen: !this.state.formOpen,
-        beerSelect: id,
-        buildingSelect: event.target.parentElement.parentElement.parentElement.parentElement.getAttribute(
-          'data-buildingid'
-        ),
-        floorSelect: event.target.parentElement.parentElement.getAttribute(
-          'data-floorid'
-        )
+        keg: id,
+        beerSelect: keg,
+        beerLocation: id,
+        floorSelect: floor
       }),
       () => console.log('toggleForm', this.state)
     );
@@ -95,7 +101,8 @@ function msp(state) {
     buildings: state.buildings,
     floors: state.floors,
     kegs: state.kegs,
-    beerLocations: state.beerLocations
+    beerLocations: state.beerLocations,
+    url: state.url
   };
 }
 
@@ -112,6 +119,9 @@ function mdp(dispatch) {
     },
     addBeerLocations: beerLocationsData => {
       dispatch({ type: 'ADD_BEERLOCATIONS', payload: beerLocationsData });
+    },
+    changeBeerLocation: beerLocationData => {
+      dispatch({ type: 'CHANGE_BEERLOCATION', payload: beerLocationData });
     }
   };
 }
