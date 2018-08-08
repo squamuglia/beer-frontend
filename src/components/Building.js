@@ -62,7 +62,9 @@ class Building extends Component {
     return this.props.buildings.map(building => {
       return (
         <div className="fa" data-buildingid={building.id} id={UUID()}>
-          <h3 className="white my05">{building.street}</h3>
+          <h3 className="white mt1 mb05 mr05 pb05 border-bottom">
+            {building.street}
+          </h3>
           <ul id={UUID()}>
             <Floor building={building} toggleForm={this.toggleForm} />
           </ul>

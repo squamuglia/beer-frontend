@@ -25,7 +25,7 @@ class App extends Component {
   render() {
     console.log('the props', this.props);
 
-    if (!this.props.buildings) {
+    if (!this.props.beerLocations.length) {
       return (
         <div className="fill fix f jcc aic">
           <p className="fa ac">Loading...</p>
@@ -41,26 +41,23 @@ class App extends Component {
               </h1>
               <img
                 src="./wework-logo.svg"
-                className="logo right fa mb1"
+                className="logo right fa"
                 alt="logo"
               />
             </div>
-            <hr />
+            <hr className="mt05" />
 
             <div id="lists" className="f fw mb1">
               <Building changeKeg={this.changeKeg} />
             </div>
           </div>
           <div className="x rel px1">
-            <p className="white fll small my05">
+            <p className="white fll small my05 mr1">
               *Caloric and ABV values are estimates
             </p>
-            <p className="white fll small my05 ml1">
-              **New beers highlighted for 24 hours
-            </p>
-            <p className="white fll small my05 ml1">
+            <p className="white fll small my05">
               For more info email{' '}
-              <a href="mailto:beersign@servous.co">beersign@servous.co</a>
+              <a href="mailto:maxsmouha@gmail.com">maxsmouha@gmail.com</a>
             </p>
           </div>
         </div>

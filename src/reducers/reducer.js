@@ -3,8 +3,8 @@ const defaultState = {
   floors: [],
   kegs: [],
   beerLocations: [],
-  url: 'http://localhost:3000'
-  //'https://calm-depths-56846.herokuapp.com'
+  // url: 'http://localhost:3000'
+  url: 'https://calm-depths-56846.herokuapp.com'
 };
 
 export default function reducer(state = defaultState, action) {

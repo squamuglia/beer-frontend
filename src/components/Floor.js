@@ -18,7 +18,7 @@ class Floor extends Component {
             {beerLocation.floor.number}
           </div>
           <h4
-            className="pointer"
+            className="pointer caps"
             onClick={event =>
               this.props.toggleForm(
                 event,
@@ -28,11 +28,11 @@ class Floor extends Component {
               )
             }
           >
-            {beerLocation.keg.name}
+            {beerLocation.keg.name.toLowerCase()}
           </h4>
         </div>
-        <p className="mt0">
-          Style: {beerLocation.keg.style} | Calories:{' '}
+        <p className="mt0 caps">
+          Style: {beerLocation.keg.style.toLowerCase()} | Calories:{' '}
           {beerLocation.keg.calories} | ABV: {beerLocation.keg.abv}%{' '}
         </p>
       </li>
