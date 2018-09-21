@@ -90,8 +90,10 @@ body, .bg { background: #222 }
 
 .w30 { width: 30px }
 
-.bxs { box-shadow: 0px 0px 5px #00000082; }
+.bxs { box-shadow: 0px 0px 5px #00000082 }
 
 .pointer { cursor: pointer }
 
 .vh { min-height: calc(100vh - 4rem); }
+
+.selector { color: #111 }

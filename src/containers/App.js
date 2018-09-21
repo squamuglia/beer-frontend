@@ -49,8 +49,16 @@ class App extends Component {
               *Caloric and ABV values are estimates
             </p>
             <p className="white fll small my05">
-              For more info email{' '}
-              <a href="mailto:maxsmouha@gmail.com">maxsmouha@gmail.com</a>
+              <span role="img" aria-label="broken-heart">
+                💔
+              </span>
+              <a
+                href="http://maxsmouha.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Max Smouha
+              </a>
             </p>
           </div>
         </div>

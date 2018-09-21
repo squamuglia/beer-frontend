@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Select from 'react-select';
 
 class UpdateBeerForm extends Component {
   constructor(props) {
@@ -14,13 +15,20 @@ class UpdateBeerForm extends Component {
   selectHandler = e => {
     this.setState(
       {
-        selectId: parseInt(e.target.value, 10)
+        selectId: parseInt(e.value, 10)
       },
       () => console.log('updatebeerstate', this.state)
     );
   };
 
   render() {
+    console.log(
+      'kegs select',
+      this.props.kegs.map(keg => ({
+        value: keg.id,
+        label: keg.name
+      }))
+    );
     return (
       <div className="fix fill bg-90 f aic jcc z1">
         <div className="fa border mw-1 p1 bg b z10 m1">
@@ -33,11 +41,14 @@ class UpdateBeerForm extends Component {
           </div>
           <form>
             <label>Name</label>
-            <select onChange={this.selectHandler}>
-              {this.props.kegs.map(keg => (
-                <option value={keg.id}>{keg.name}</option>
-              ))}
-            </select>
+            <Select
+              className="selector"
+              onChange={this.selectHandler}
+              options={this.props.kegs.map(keg => ({
+                value: keg.id,
+                label: keg.name
+              }))}
+            />
             <br />
             <button
               onClick={event =>

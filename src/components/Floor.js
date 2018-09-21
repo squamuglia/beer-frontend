@@ -2,6 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class Floor extends Component {
+  loadDescription = (style, cal, abv) => {
+    if (cal) {
+      return `Style: ${style} | Calories: 
+    ${cal} | ABV: ${abv}% `;
+    } else {
+      return `Style: ${style}`;
+    }
+  };
+
   loadFloors = () => {
     const beerLocations = this.props.beerLocations.filter(
       beerLocation => beerLocation.floor.building_id === this.props.building.id
@@ -24,12 +33,15 @@ class Floor extends Component {
               )
             }
           >
-            {beerLocation.keg.name.toLowerCase()}
+            {beerLocation.keg.name}
           </h4>
         </div>
         <p className="mt0 caps">
-          Style: {beerLocation.keg.style.toLowerCase()} | Calories:{' '}
-          {beerLocation.keg.calories} | ABV: {beerLocation.keg.abv}%{' '}
+          {this.loadDescription(
+            beerLocation.keg.style,
+            beerLocation.keg.calories,
+            beerLocation.keg.abv
+          )}
         </p>
       </li>
     ));

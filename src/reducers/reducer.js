@@ -22,9 +22,12 @@ export default function reducer(state = defaultState, action) {
       };
 
     case 'ADD_KEGS':
+      const sortedKegs = action.payload.sort(function(a, b) {
+        return a.name - b.name;
+      });
       return {
         ...state,
-        kegs: [...state.kegs, ...action.payload]
+        kegs: [...state.kegs, ...sortedKegs]
       };
 
     case 'ADD_BEERLOCATIONS':
