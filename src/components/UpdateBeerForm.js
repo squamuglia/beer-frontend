@@ -14,7 +14,7 @@ class UpdateBeerForm extends Component {
   selectHandler = e => {
     this.setState(
       {
-        selectId: parseInt(e.target.value)
+        selectId: parseInt(e.target.value, 10)
       },
       () => console.log('updatebeerstate', this.state)
     );
@@ -23,7 +23,7 @@ class UpdateBeerForm extends Component {
   render() {
     return (
       <div className="fix fill bg-90 f aic jcc z1">
-        <div className="fa border mw-1 p1 bg b z10">
+        <div className="fa border mw-1 p1 bg b z10 m1">
           <div
             className="x ar"
             id="x"

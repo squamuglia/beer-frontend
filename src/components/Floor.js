@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class Floor extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   loadFloors = () => {
     const beerLocations = this.props.beerLocations.filter(
       beerLocation => beerLocation.floor.building_id === this.props.building.id

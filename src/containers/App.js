@@ -3,17 +3,10 @@ import { connect } from 'react-redux';
 import Building from '../components/Building';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     fetch(this.props.url + '/api/v1/buildings')
       .then(r => r.json())
       .then(buildings => this.props.addBuildings(buildings));
-    fetch(this.props.url + '/api/v1/floors')
-      .then(r => r.json())
-      .then(floors => this.props.addFloors(floors));
     fetch(this.props.url + '/api/v1/kegs')
       .then(r => r.json())
       .then(kegs => this.props.addKegs(kegs));
@@ -34,9 +27,9 @@ class App extends Component {
     } else {
       return (
         <div className="App">
-          <div className="p1 mx1 mt1 border fill rel">
+          <div className="p1 mx1 mt1 border fill rel vh">
             <div className="f fw x aic">
-              <h1 className="fll fa white al" id="title">
+              <h1 className="fll fa white al order-2" id="title">
                 Beer List
               </h1>
               <img
