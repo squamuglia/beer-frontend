@@ -88,6 +88,7 @@ em, .i {
 .caps {
   text-transform:capitalize;
 }
+.under { text-decoration: underline; }
 .no-under {
   text-decoration: none;
 }

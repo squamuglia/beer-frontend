@@ -22,12 +22,47 @@ export default function reducer(state = defaultState, action) {
       };
 
     case 'ADD_KEGS':
+      //sorts alphabetically
       const sortedKegs = action.payload.sort(function(a, b) {
-        return a.name - b.name;
+        return a.name.localeCompare(b.name);
       });
       return {
         ...state,
         kegs: [...state.kegs, ...sortedKegs]
+      };
+
+    case 'ADD_KEG':
+      //sorts alphabetically
+      const allKegs = [...state.kegs, action.payload];
+      const sortedAllKegs = allKegs.sort(function(a, b) {
+        return a.name.localeCompare(b.name);
+      });
+      return {
+        ...state,
+        kegs: sortedAllKegs
+      };
+
+    case 'UPDATE_KEG':
+      console.log('update keg payload', action.payload);
+      const kegRemovalIndex = state.kegs.findIndex(
+        keg => keg.id === action.payload.id
+      );
+      return {
+        ...state,
+        kegs: [
+          ...state.kegs.slice(0, kegRemovalIndex),
+          action.payload,
+          ...state.kegs.slice(kegRemovalIndex + 1)
+        ]
+      };
+
+    case 'REFRESH_LOCATIONS':
+      const freshLocations = action.payload.sort(function(a, b) {
+        return a.floor.id - b.floor.id;
+      });
+      return {
+        ...state,
+        beerLocations: [...freshLocations]
       };
 
     case 'ADD_BEERLOCATIONS':

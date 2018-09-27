@@ -4,7 +4,7 @@ import Floor from './Floor';
 import UpdateBeerForm from './UpdateBeerForm';
 import UUID from 'uuid';
 
-class Building extends Component {
+class WeWorkDisplay extends Component {
   constructor(props) {
     super(props);
 
@@ -59,6 +59,14 @@ class Building extends Component {
   };
 
   loadFloors = () => {
+    setTimeout(() => {
+      console.log('refreshed');
+      fetch(this.props.url + '/api/v1/beerlocations')
+        .then(r => r.json())
+        .then(beerLocations => this.props.refreshLocations(beerLocations))
+        .catch(e => console.log(e));
+    }, 10000);
+
     return this.props.buildings.map(building => {
       return (
         <div className="fa" data-buildingid={building.id} id={UUID()}>
@@ -93,6 +101,9 @@ class Building extends Component {
       <div id="lists" className="f fw mb1">
         {this.formDisplay()}
         {this.loadFloors()}
+        <div className="white fix bottom right small pb2 mr1">
+          Visit beer.topset.co to view on the go!
+        </div>
       </div>
     );
   }
@@ -110,20 +121,8 @@ function msp(state) {
 
 function mdp(dispatch) {
   return {
-    addBuildings: buildingsData => {
-      dispatch({ type: 'ADD_BUILDINGS', payload: buildingsData });
-    },
-    addFloors: floorsData => {
-      dispatch({ type: 'ADD_FLOORS', payload: floorsData });
-    },
-    addKegs: kegsData => {
-      dispatch({ type: 'ADD_KEGS', payload: kegsData });
-    },
-    addBeerLocations: beerLocationsData => {
-      dispatch({ type: 'ADD_BEERLOCATIONS', payload: beerLocationsData });
-    },
-    changeBeerLocation: beerLocationData => {
-      dispatch({ type: 'CHANGE_BEERLOCATION', payload: beerLocationData });
+    refreshLocations: beerLocationsData => {
+      dispatch({ type: 'REFRESH_LOCATIONS', payload: beerLocationsData });
     }
   };
 }
@@ -131,4 +130,4 @@ function mdp(dispatch) {
 export default connect(
   msp,
   mdp
-)(Building);
+)(WeWorkDisplay);

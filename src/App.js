@@ -1,23 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Building from '../components/Building';
+import Building from './components/Building';
+import Admin from './containers/Admin';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import WeWorkDisplay from './components/WeWorkDisplay';
 
 class App extends Component {
   componentDidMount() {
     fetch(this.props.url + '/api/v1/buildings')
       .then(r => r.json())
-      .then(buildings => this.props.addBuildings(buildings));
+      .then(buildings => this.props.addBuildings(buildings))
+      .catch(e => console.log(e));
     fetch(this.props.url + '/api/v1/kegs')
       .then(r => r.json())
-      .then(kegs => this.props.addKegs(kegs));
+      .then(kegs => this.props.addKegs(kegs))
+      .catch(e => console.log(e));
     fetch(this.props.url + '/api/v1/beerlocations')
       .then(r => r.json())
-      .then(beerLocations => this.props.addBeerLocations(beerLocations));
+      .then(beerLocations => this.props.addBeerLocations(beerLocations))
+      .catch(e => console.log(e));
   }
 
   render() {
-    console.log('the props', this.props);
-
     if (!this.props.beerLocations.length) {
       return (
         <div className="fill fix f jcc aic">
@@ -27,7 +31,7 @@ class App extends Component {
     } else {
       return (
         <div className="App">
-          <div className="p1 mx1 mt1 border fill rel vh">
+          <div className="p1 mx1 mt1 border fill rel vh-4">
             <div className="f fw x aic">
               <h1 className="fll fa white al order-2" id="title">
                 Beer List
@@ -39,10 +43,17 @@ class App extends Component {
               />
             </div>
             <hr className="mt05" />
-
-            <div id="lists" className="f fw mb1">
-              <Building changeKeg={this.changeKeg} />
-            </div>
+            <Router>
+              <React.Fragment>
+                <Route exact path="/" component={() => <Building />} />
+                <Route
+                  exact
+                  path="/wework"
+                  component={() => <WeWorkDisplay />}
+                />
+                <Route exact path="/admin" component={() => <Admin />} />
+              </React.Fragment>
+            </Router>
           </div>
           <div className="x rel px1">
             <p className="white fll small my05 mr1">

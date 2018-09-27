@@ -12,67 +12,67 @@
 
 
 /* Borders and Rounding */
-.border{
+.border {
     border-style:solid;
     border-width: 1px;
   }
   
-  .border-top{
+.border-top {
     border-top-style:solid;
     border-top-width: 1px;
   }
   
-  .border-right{
+.border-right {
     border-right-style:solid;
     border-right-width: 1px;
   }
   
-  .border-bottom{
+.border-bottom {
     border-bottom-style:solid;
     border-bottom-width: 1px;
   }
   
-  .border-left{
+.border-left {
     border-left-style:solid;
     border-left-width: 1px;
   }
 
-  .border-dark { border-color: #222 }
+.border-dark { border-color: #222 }
   
-  .border-none{ border:0 }
+.border-none { border:0 }
   
-  .rounded{ border-radius: 3px }
-  .circle{ border-radius:50% }
+.rounded { border-radius: 3px }
+.circle { border-radius:50% }
   
-  .rounded-top{ border-radius: 3px 3px 0 0 }
-  .rounded-right{ border-radius: 0 3px 3px 0 }
-  .rounded-bottom{ border-radius: 0 0 3px 3px }
-  .rounded-left{ border-radius: 3px 0 0 3px }
+.rounded-top { border-radius: 3px 3px 0 0 }
+.rounded-right { border-radius: 0 3px 3px 0 }
+.rounded-bottom { border-radius: 0 0 3px 3px }
+.rounded-left { border-radius: 3px 0 0 3px }
   
-  .order-2 { order: 0 }
+.order-2 { order: 0 }
 
 /* Breakpoints */
 @media (max-width: 27em){
-    .xs-hide{ display:none !important }
-    
-    .mobile-button { position: fixed;  }
+  .xs-hide { display:none !important }
+  
+  .mobile-button { position: fixed;  }
 
-    .order-2 { order: 2 }
-  }
+  .order-2 { order: 2 }
+}
   
-  @media (min-width: 40em) and (max-width: 52em){
-    .sm-hide{ display:none !important }
+@media (min-width: 40em) and (max-width: 52em) {
+  .sm-hide { display:none !important }
 
-    .mobile-button { position: fixed;  }
-  }
+  .mobile-button { position: fixed;  }
+}
   
-  @media (min-width: 52em) and (max-width: 64em){
-    .md-hide{ display:none !important }
-  }
+@media (min-width: 52em) and (max-width: 64em) {
+  .md-hide { display:none !important }
+}
   
-  @media (min-width: 64em){
-    .lg-hide{ display:none !important }
-  }
+@media (min-width: 64em){
+  .lg-hide { display:none !important }
+}
   
   
 /* Custom */
@@ -94,6 +94,13 @@ body, .bg { background: #222 }
 
 .pointer { cursor: pointer }
 
-.vh { min-height: calc(100vh - 4rem); }
+.vh-4 { min-height: calc(100vh - 4rem); }
 
+.vh { min-height: 100vh; }
+.vw { min-height: 100vw; }
+
+.h20 { height: 20rem }
+.mw20 { max-width: 20rem }
 .selector { color: #111 }
+
+tr:nth-child(even) { background: #333 }
