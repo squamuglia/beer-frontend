@@ -50,7 +50,7 @@ class UpdateBeerForm extends Component {
               }))}
             />
             <br />
-            <button
+            <div
               onClick={event =>
                 this.props.changeKeg(event, this.state.selectId)
               }
@@ -58,7 +58,7 @@ class UpdateBeerForm extends Component {
               id="new-beer"
             >
               <h3 id="update-beer">Update Beer</h3>
-            </button>
+            </div>
           </form>
         </div>
       </div>
