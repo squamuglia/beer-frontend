@@ -10,24 +10,33 @@ class BeerMasterList extends Component {
   };
 
   toggleEditForm = id => {
-    this.setState(
-      {
-        displayEditForm: !this.state.displayEditForm,
-        activeBeer: id
-      },
-      () => console.log('state', this.state)
-    );
+    this.setState({
+      displayEditForm: !this.state.displayEditForm,
+      activeBeer: id
+    });
   };
 
   listBeers = () => {
     return this.props.kegs.map(beer => {
       return (
-        <tr id={UUID()}>
-          <td className="px05">{beer.name}</td>
-          <td className="px05">{beer.style}</td>
-          <td className="px05">{beer.calories}</td>
-          <td className="px05">{beer.abv}</td>
-          <td className="ac" onClick={() => this.toggleEditForm(beer.id)}>
+        <tr key={UUID()}>
+          <td key={UUID()} className="px05">
+            {beer.name}
+          </td>
+          <td key={UUID()} className="px05">
+            {beer.style}
+          </td>
+          <td key={UUID()} className="px05">
+            {beer.calories}
+          </td>
+          <td key={UUID()} className="px05">
+            {beer.abv}
+          </td>
+          <td
+            key={UUID()}
+            className="ac"
+            onClick={() => this.toggleEditForm(beer.id)}
+          >
             edit
           </td>
         </tr>
@@ -55,7 +64,7 @@ class BeerMasterList extends Component {
         {this.displayForm()}
         <table className="x al">
           <tbody>
-            <tr id={UUID()}>
+            <tr>
               <th className="px05">Beer</th>
               <th className="px05">Style</th>
               <th className="px05">Calories</th>
@@ -70,6 +79,12 @@ class BeerMasterList extends Component {
             {this.listBeers()}
           </tbody>
         </table>
+        <p
+          className="bottom right abs under pointer small logout"
+          onClick={this.props.logout()}
+        >
+          Logout
+        </p>
       </React.Fragment>
     );
   }
@@ -84,8 +99,8 @@ function msp(state) {
 
 function mdp(dispatch) {
   return {
-    addKegs: kegsData => {
-      dispatch({ type: 'ADD_KEGS', payload: kegsData });
+    logout: () => {
+      dispatch({ type: 'LOGOUT' });
     }
   };
 }

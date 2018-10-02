@@ -9,8 +9,6 @@ import registerServiceWorker from './registerServiceWorker';
 
 const store = createStore(reducer);
 
-console.log('index js store', store.getState());
-
 ReactDOM.render(
   <Provider store={store}>
     <App />

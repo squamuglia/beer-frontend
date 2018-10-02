@@ -53,7 +53,8 @@ class AddBeerForm extends Component {
         }),
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('token')
         }
       })
         .then(r => r.json())
@@ -70,7 +71,8 @@ class AddBeerForm extends Component {
         }),
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('token')
         }
       })
         .then(r => r.json())
@@ -128,7 +130,7 @@ class AddBeerForm extends Component {
                   onChange={e => this.changeBeerState('abv', e.target.value)}
                 />
                 <div
-                  className="px1 mt1 border ac"
+                  className="px1 mt1 border ac button"
                   id="new-beer"
                   onClick={this.addOrUpdateBeer}
                 >

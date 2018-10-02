@@ -3,8 +3,9 @@ const defaultState = {
   floors: [],
   kegs: [],
   beerLocations: [],
-  // url: 'http://localhost:3000'
-  url: 'https://calm-depths-56846.herokuapp.com'
+  loggedIn: false,
+  url: 'http://localhost:3000'
+  // url: 'https://calm-depths-56846.herokuapp.com'
 };
 
 export default function reducer(state = defaultState, action) {
@@ -43,7 +44,6 @@ export default function reducer(state = defaultState, action) {
       };
 
     case 'UPDATE_KEG':
-      console.log('update keg payload', action.payload);
       const kegRemovalIndex = state.kegs.findIndex(
         keg => keg.id === action.payload.id
       );
@@ -86,6 +86,21 @@ export default function reducer(state = defaultState, action) {
           action.payload,
           ...state.beerLocations.slice(removalIndex + 1)
         ]
+      };
+
+    case 'LOGIN':
+      console.log('loggedIn: true');
+
+      return {
+        ...state,
+        loggedIn: true
+      };
+
+    case 'LOGOUT':
+      localStorage.removeItem('token');
+      return {
+        ...state,
+        loggedIn: false
       };
 
     default:

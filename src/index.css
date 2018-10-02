@@ -104,3 +104,7 @@ body, .bg { background: #222 }
 .selector { color: #111 }
 
 tr:nth-child(even) { background: #333 }
+
+/* Shame */
+
+.logout { margin-bottom: -1.6rem }

@@ -123,6 +123,9 @@ function mdp(dispatch) {
   return {
     refreshLocations: beerLocationsData => {
       dispatch({ type: 'REFRESH_LOCATIONS', payload: beerLocationsData });
+    },
+    changeBeerLocation: beerLocationData => {
+      dispatch({ type: 'CHANGE_BEERLOCATION', payload: beerLocationData });
     }
   };
 }

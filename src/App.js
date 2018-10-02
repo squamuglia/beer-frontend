@@ -59,7 +59,7 @@ class App extends Component {
             <p className="white fll small my05 mr1">
               *Caloric and ABV values are estimates
             </p>
-            <p className="white fll small my05">
+            <p className="white fll small my05 mr1">
               <span role="img" aria-label="broken-heart">
                 💔
               </span>
@@ -71,6 +71,7 @@ class App extends Component {
                 Max Smouha
               </a>
             </p>
+            <p className="white fll small my05 under pointer">About</p>
           </div>
         </div>
       );

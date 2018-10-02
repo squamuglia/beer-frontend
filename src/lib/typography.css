@@ -92,3 +92,4 @@ em, .i {
 .no-under {
   text-decoration: none;
 }
+.pointer { cursor: pointer; }

@@ -54,7 +54,7 @@ class UpdateBeerForm extends Component {
               onClick={event =>
                 this.props.changeKeg(event, this.state.selectId)
               }
-              className="px1 mt1 border ac"
+              className="px1 mt1 border ac button"
               id="new-beer"
             >
               <h3 id="update-beer">Update Beer</h3>
