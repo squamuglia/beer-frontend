@@ -34,6 +34,7 @@ export default function reducer(state = defaultState, action) {
 
     case 'ADD_KEG':
       //sorts alphabetically
+      console.log('add');
       const allKegs = [...state.kegs, action.payload];
       const sortedAllKegs = allKegs.sort(function(a, b) {
         return a.name.localeCompare(b.name);
@@ -47,14 +48,18 @@ export default function reducer(state = defaultState, action) {
       const kegRemovalIndex = state.kegs.findIndex(
         keg => keg.id === action.payload.id
       );
-      return {
-        ...state,
-        kegs: [
-          ...state.kegs.slice(0, kegRemovalIndex),
-          action.payload,
-          ...state.kegs.slice(kegRemovalIndex + 1)
-        ]
-      };
+      if (kegRemovalIndex >= 0) {
+        console.log('updateKeg', action.payload);
+        console.log('kegindex', kegRemovalIndex);
+        return {
+          ...state,
+          kegs: [
+            ...state.kegs.slice(0, kegRemovalIndex),
+            action.payload,
+            ...state.kegs.slice(kegRemovalIndex + 1)
+          ]
+        };
+      } else return state;
 
     case 'REFRESH_LOCATIONS':
       const freshLocations = action.payload.sort(function(a, b) {
@@ -89,18 +94,16 @@ export default function reducer(state = defaultState, action) {
       };
 
     case 'LOGIN':
-      console.log('loggedIn: true');
-
       return {
         ...state,
         loggedIn: true
       };
 
     case 'LOGOUT':
-      localStorage.removeItem('token');
       return {
         ...state,
-        loggedIn: false
+        loggedIn: false,
+        email: null
       };
 
     default:

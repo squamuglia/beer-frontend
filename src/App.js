@@ -34,7 +34,9 @@ class App extends Component {
           <div className="p1 mx1 mt1 border fill rel vh-4">
             <div className="f fw x aic">
               <h1 className="fll fa white al order-2" id="title">
-                Beer List
+                <a href="/" className="no-under">
+                  Beer List
+                </a>
               </h1>
               <img
                 src="./wework-logo.svg"

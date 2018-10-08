@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import AddBeerForm from './AddBeerForm';
+import Logout from './Logout';
 import UUID from 'uuid';
 
 class BeerMasterList extends Component {
@@ -17,6 +18,7 @@ class BeerMasterList extends Component {
   };
 
   listBeers = () => {
+    console.log('global state', this.props.kegs);
     return this.props.kegs.map(beer => {
       return (
         <tr key={UUID()}>
@@ -79,12 +81,7 @@ class BeerMasterList extends Component {
             {this.listBeers()}
           </tbody>
         </table>
-        <p
-          className="bottom right abs under pointer small logout"
-          onClick={this.props.logout()}
-        >
-          Logout
-        </p>
+        <Logout />
       </React.Fragment>
     );
   }

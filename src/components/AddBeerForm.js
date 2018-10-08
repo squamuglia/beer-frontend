@@ -41,7 +41,6 @@ class AddBeerForm extends Component {
 
   addOrUpdateBeer = e => {
     e.preventDefault();
-    console.log('addOrUpdateBeer', this.state);
     if (this.props.beerId !== 'adding') {
       fetch(this.props.url + '/api/v1/kegs/' + this.state.id, {
         method: 'POST',
@@ -54,13 +53,16 @@ class AddBeerForm extends Component {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          Authorization: localStorage.getItem('token')
+          // Authentication: 'Bearer ' + localStorage.getItem('token')
+          'X-User-Email': `${localStorage.getItem('email')}`,
+          'X-User-Token': localStorage.getItem('token')
         }
       })
         .then(r => r.json())
         .then(keg => this.props.updateKegs(keg))
         .catch(e => console.log(e));
     } else {
+      console.log('add keg');
       fetch(this.props.url + '/api/v1/kegs', {
         method: 'POST',
         body: JSON.stringify({
@@ -72,7 +74,8 @@ class AddBeerForm extends Component {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          Authorization: localStorage.getItem('token')
+          'X-User-Email': `${localStorage.getItem('email')}`,
+          'X-User-Token': `${localStorage.getItem('token')}`
         }
       })
         .then(r => r.json())
@@ -150,6 +153,7 @@ class AddBeerForm extends Component {
 
 function msp(state) {
   return {
+    email: state.email,
     kegs: state.kegs,
     url: state.url
   };

@@ -19,6 +19,8 @@ class Login extends Component {
 
   storeToken = token => {
     localStorage.setItem('token', token);
+    localStorage.setItem('email', this.state.email);
+
     console.log('storing token');
 
     this.props.login();
@@ -28,7 +30,7 @@ class Login extends Component {
     console.log('logging in');
     e.preventDefault();
 
-    fetch('http://localhost:3000/api/v1/sessions', {
+    fetch(this.props.url + '/api/v1/sessions', {
       method: 'POST',
       body: JSON.stringify({
         email: this.state.email,
@@ -48,7 +50,7 @@ class Login extends Component {
     return (
       <div className="f aic jcc x h20">
         <div className="fa mw20">
-          <form onSubmit={e => this.checkLogIn(e)}>
+          <form>
             <input
               type="text"
               name="email"
@@ -77,7 +79,8 @@ class Login extends Component {
 
 const msp = state => {
   return {
-    url: state.url
+    url: state.url,
+    email: state.email
   };
 };
 
@@ -85,6 +88,9 @@ const mdp = dispatch => {
   return {
     login: () => {
       dispatch({ type: 'LOGIN' });
+    },
+    setEmail: email => {
+      dispatch({ type: 'SET_EMAIL', payload: email });
     }
   };
 };

@@ -4,13 +4,15 @@ import BeerMasterList from '../components/BeerMasterList';
 import { connect } from 'react-redux';
 
 class Admin extends Component {
+  checkLogin = props => {
+    if (localStorage.getItem('token') || props) {
+      return <BeerMasterList />;
+    }
+    return <Login />;
+  };
+
   render() {
-    return (
-      <React.Fragment>
-        <p>{this.props.loggedIn.toString()}</p>
-        {this.props.loggedIn ? <BeerMasterList /> : <Login />}
-      </React.Fragment>
-    );
+    return <div>{this.checkLogin(this.props.loggedIn)}</div>;
   }
 }
 
