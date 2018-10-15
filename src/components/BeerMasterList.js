@@ -18,7 +18,6 @@ class BeerMasterList extends Component {
   };
 
   listBeers = () => {
-    console.log('global state', this.props.kegs);
     return this.props.kegs.map(beer => {
       return (
         <tr key={UUID()}>

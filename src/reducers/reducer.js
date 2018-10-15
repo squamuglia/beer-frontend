@@ -34,7 +34,6 @@ export default function reducer(state = defaultState, action) {
 
     case 'ADD_KEG':
       //sorts alphabetically
-      console.log('add');
       const allKegs = [...state.kegs, action.payload];
       const sortedAllKegs = allKegs.sort(function(a, b) {
         return a.name.localeCompare(b.name);
@@ -49,8 +48,6 @@ export default function reducer(state = defaultState, action) {
         keg => keg.id === action.payload.id
       );
       if (kegRemovalIndex >= 0) {
-        console.log('updateKeg', action.payload);
-        console.log('kegindex', kegRemovalIndex);
         return {
           ...state,
           kegs: [

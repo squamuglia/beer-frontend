@@ -6,6 +6,10 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import WeWorkDisplay from './components/WeWorkDisplay';
 
 class App extends Component {
+  state = {
+    displayAboutForm: false
+  };
+
   componentDidMount() {
     fetch(this.props.url + '/api/v1/buildings')
       .then(r => r.json())
@@ -20,6 +24,13 @@ class App extends Component {
       .then(beerLocations => this.props.addBeerLocations(beerLocations))
       .catch(e => console.log(e));
   }
+
+  toggleAboutForm = () => {
+    this.setState({
+      ...this.state,
+      displayAboutForm: !this.state.displayAboutForm
+    });
+  };
 
   render() {
     if (!this.props.beerLocations.length) {
@@ -73,7 +84,12 @@ class App extends Component {
                 Max Smouha
               </a>
             </p>
-            <p className="white fll small my05 under pointer">About</p>
+            <p
+              className="white fll small my05 under pointer"
+              onClick={this.toggleAboutForm}
+            >
+              About
+            </p>
           </div>
         </div>
       );
