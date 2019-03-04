@@ -1,20 +1,37 @@
 import React, { Component } from 'react';
+import Select from 'react-select';
 
 class UpdateBeerForm extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      ...this.props.keg
+      id: this.props.keg.id,
+      name: this.props.keg.name,
+      selectId: this.props.keg.id
     };
   }
 
-  render() {
-    console.log('form props', this.props);
+  selectHandler = e => {
+    this.setState(
+      {
+        selectId: parseInt(e.value, 10)
+      },
+      () => console.log('updatebeerstate', this.state)
+    );
+  };
 
+  render() {
+    console.log(
+      'kegs select',
+      this.props.kegs.map(keg => ({
+        value: keg.id,
+        label: keg.name
+      }))
+    );
     return (
       <div className="fix fill bg-90 f aic jcc z1">
-        <div className="fa border mw-1 p1 bg b z10">
+        <div className="fa border mw-1 p1 bg b z10 m1">
           <div
             className="x ar"
             id="x"
@@ -24,15 +41,19 @@ class UpdateBeerForm extends Component {
           </div>
           <form>
             <label>Name</label>
-            <select>
-              <option value="null">No Beer</option>
-              {this.props.kegs.map(keg => (
-                <option value={keg.id}>{keg.name}</option>
-              ))}
-            </select>
+            <Select
+              className="selector"
+              onChange={this.selectHandler}
+              options={this.props.kegs.map(keg => ({
+                value: keg.id,
+                label: keg.name
+              }))}
+            />
             <br />
             <button
-              onClick={event => console.log(event)}
+              onClick={event =>
+                this.props.changeKeg(event, this.state.selectId)
+              }
               className="px1 mt1 border ac"
               id="new-beer"
             >
