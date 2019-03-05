@@ -60,6 +60,7 @@ class Building extends Component {
 						{floors &&
 							Object.keys(floors).map(key => (
 								<Floor
+									key={key}
 									bldgid={bldgid}
 									floor={floors[key]}
 									beer={beers[floors[key].bid]}
