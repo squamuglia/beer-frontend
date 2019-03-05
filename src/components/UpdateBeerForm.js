@@ -21,6 +21,8 @@ class UpdateBeerForm extends Component {
 			.collection("floors")
 			.doc(this.props.floor)
 			.update({ bid: this.state.bid });
+
+		this.props.toggleForm();
 	};
 
 	render() {

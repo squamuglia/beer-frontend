@@ -52,7 +52,7 @@ class Building extends Component {
 						bldgid={bldgid}
 					/>
 				)}
-				<div className="fa col-30" key={uuid()}>
+				<div className="fa col-50" key={uuid()}>
 					<h3 className="white mt1 mb05 mr05 pb05 border-bottom">
 						{this.props.building.street}
 					</h3>

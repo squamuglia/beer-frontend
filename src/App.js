@@ -78,7 +78,7 @@ class App extends Component {
 
 					<div className="x rel px1">
 						<p className="white fll small my05 mr1">
-							*Caloric and ABV values are estimates
+							*ABV values are estimates
 						</p>
 						<p className="white fll small my05">
 							<span role="img" aria-label="broken-heart">
