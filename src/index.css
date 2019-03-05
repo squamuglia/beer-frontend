@@ -1,14 +1,14 @@
-@import './lib/reset.css';
-@import './lib/display.css';
-@import './lib/positioning.css';
-@import './lib/flexbox.css';
-@import './lib/align.css';
-@import './lib/spacing.css';
-@import './lib/buttons.css';
-@import './lib/forms.css';
-@import './lib/lists.css';
-@import './lib/typography.css';
-@import './lib/z-index.css';
+@import './styles/reset.css';
+@import './styles/display.css';
+@import './styles/positioning.css';
+@import './styles/flexbox.css';
+@import './styles/align.css';
+@import './styles/spacing.css';
+@import './styles/buttons.css';
+@import './styles/forms.css';
+@import './styles/lists.css';
+@import './styles/typography.css';
+@import './styles/z-index.css';
 
 
 /* Borders and Rounding */
@@ -51,6 +51,12 @@
   
   .order-2 { order: 0 }
 
+  .col-30 {
+    max-width: 33.333%;
+    width: 100%;
+  }
+  
+  
 /* Breakpoints */
 @media (max-width: 27em){
     .xs-hide{ display:none !important }
@@ -58,6 +64,8 @@
     .mobile-button { position: fixed;  }
 
     .order-2 { order: 2 }
+
+    .col-30 { max-width: 100% }
   }
   
   @media (min-width: 40em) and (max-width: 52em){
@@ -97,3 +105,4 @@ body, .bg { background: #222 }
 .vh { min-height: calc(100vh - 4rem); }
 
 .selector { color: #111 }
+

@@ -1,134 +1,78 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import Floor from './Floor';
-import UpdateBeerForm from './UpdateBeerForm';
-import UUID from 'uuid';
+import React, { Component } from "react";
+import Floor from "./Floor";
+import UpdateBeerForm from "./UpdateBeerForm";
+import firebase from "../firebase";
+import uuid from "uuid";
 
 class Building extends Component {
-  constructor(props) {
-    super(props);
+	state = {
+		formOpen: false,
+		floors: null,
+		beerSelect: null,
+		floorSelect: null
+	};
 
-    this.state = {
-      formOpen: false,
-      beerSelect: null,
-      floorSelect: null,
-      beerLocation: null,
-      keg: null
-    };
-  }
+	componentDidMount() {
+		firebase
+			.firestore()
+			.collection("buildings")
+			.doc(this.props.bldgid)
+			.collection("floors")
+			.orderBy("floor")
+			.onSnapshot(
+				snapshot => {
+					const floors = {};
+					snapshot.forEach(doc => (floors[doc.id] = doc.data()));
+					this.setState({ ...this.state, floors });
+				},
+				err => console.log("Survey listening error: ", err.message)
+			);
+	}
 
-  objectIdComparator = (array, object) =>
-    !array.map(item => item.id === object.id).includes(true);
+	toggleForm = (key, bid) =>
+		this.setState({
+			...this.state,
+			formOpen: !this.state.formOpen,
+			floorSelect: key,
+			beerSelect: bid
+		});
 
-  changeKeg = (e, kegSelect) => {
-    e.preventDefault();
-    fetch(this.props.url + '/api/v1/beerlocations/' + this.state.beerLocation, {
-      method: 'POST',
-      body: JSON.stringify({
-        keg_id: kegSelect,
-        floor_id: this.state.floorSelect
-      }),
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(r => r.json())
-      .then(beerLocation => this.props.changeBeerLocation(beerLocation));
+	render() {
+		const { floors } = this.state,
+			{ beers, bldgid } = this.props;
 
-    this.setState({
-      ...this.state,
-      formOpen: !this.state.formOpen
-    });
-  };
-
-  formDisplay = () => {
-    if (this.state.formOpen === true) {
-      let kegSelect = '';
-
-      return (
-        <UpdateBeerForm
-          toggleForm={this.toggleForm}
-          keg={kegSelect}
-          kegs={this.props.kegs}
-          floor={this.state.floorSelect}
-          changeKeg={this.changeKeg}
-        />
-      );
-    }
-  };
-
-  loadFloors = () => {
-    return this.props.buildings.map(building => {
-      return (
-        <div className="fa" data-buildingid={building.id} id={UUID()}>
-          <h3 className="white mt1 mb05 mr05 pb05 border-bottom">
-            {building.street}
-          </h3>
-          <ul id={UUID()}>
-            <Floor building={building} toggleForm={this.toggleForm} />
-          </ul>
-        </div>
-      );
-    });
-  };
-
-  toggleForm = (event, id, keg, floor) => {
-    this.setState(
-      Object.assign({}, this.state, {
-        formOpen: !this.state.formOpen,
-        keg: id,
-        beerSelect: keg,
-        beerLocation: id,
-        floorSelect: floor
-      }),
-      () => console.log('toggleForm', this.state)
-    );
-  };
-
-  render() {
-    console.log('building props', this.props);
-
-    return (
-      <React.Fragment>
-        {this.formDisplay()}
-        {this.loadFloors()}
-      </React.Fragment>
-    );
-  }
+		return (
+			<>
+				{this.state.formOpen && (
+					<UpdateBeerForm
+						toggleForm={this.toggleForm}
+						floor={this.state.floorSelect}
+						bid={this.state.beerSelect}
+						beers={beers}
+						bldgid={bldgid}
+					/>
+				)}
+				<div className="fa col-30" key={uuid()}>
+					<h3 className="white mt1 mb05 mr05 pb05 border-bottom">
+						{this.props.building.street}
+					</h3>
+					<ul>
+						{floors &&
+							Object.keys(floors).map(key => (
+								<Floor
+									bldgid={bldgid}
+									floor={floors[key]}
+									beer={beers[floors[key].bid]}
+									toggleForm={() =>
+										this.toggleForm(key, beers[floors[key].bid])
+									}
+								/>
+							))}
+					</ul>
+				</div>
+			</>
+		);
+	}
 }
 
-function msp(state) {
-  return {
-    buildings: state.buildings,
-    floors: state.floors,
-    kegs: state.kegs,
-    beerLocations: state.beerLocations,
-    url: state.url
-  };
-}
-
-function mdp(dispatch) {
-  return {
-    addBuildings: buildingsData => {
-      dispatch({ type: 'ADD_BUILDINGS', payload: buildingsData });
-    },
-    addFloors: floorsData => {
-      dispatch({ type: 'ADD_FLOORS', payload: floorsData });
-    },
-    addKegs: kegsData => {
-      dispatch({ type: 'ADD_KEGS', payload: kegsData });
-    },
-    addBeerLocations: beerLocationsData => {
-      dispatch({ type: 'ADD_BEERLOCATIONS', payload: beerLocationsData });
-    },
-    changeBeerLocation: beerLocationData => {
-      dispatch({ type: 'CHANGE_BEERLOCATION', payload: beerLocationData });
-    }
-  };
-}
-
-export default connect(
-  msp,
-  mdp
-)(Building);
+export default Building;
