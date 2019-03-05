@@ -88,13 +88,12 @@
 body, .bg { background: #222 }
 
 .bg-white { background: #fff }
-
 .bg-90 { background: #222222e3 }
+.white { color: #fff }
+.dark { color: #222 }
 
 .logo { max-width: 10em }
 
-.white { color: #fff }
-.dark { color: #222 }
 
 .w30 { width: 30px }
 

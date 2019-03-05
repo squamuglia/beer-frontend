@@ -45,7 +45,7 @@ class UpdateBeerForm extends Component {
 					/>
 					<br />
 					<button
-						className="px1 mt1 border ac"
+						className="px1 mt1 border bg-white ac"
 						onClick={() => this.changeBeer(this.state.selectId)}
 					>
 						<h3>Update Beer</h3>
